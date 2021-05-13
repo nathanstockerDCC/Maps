@@ -262,8 +262,13 @@
          */
         function startAnimation() {
           stopAnimation();
-          animation = animate(slider.values[0]);
-          playButton.classList.add("toggled");
+          if (slider.values[0] >= 2021) {
+			  animation = animate(1845);
+		  }
+			else {
+			  animation = animate(slider.values[0]);
+			}
+		playButton.classList.add("toggled");
         }
 
         /**
@@ -291,7 +296,7 @@
               return;
             }
 
-            value += 0.25;
+            value += 0.4;
             if (value > 2021) {
              animating = false;
             }
