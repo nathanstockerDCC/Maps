@@ -1,1 +1,1 @@
-https://nathanstockerDCC.github.io/Maos/
+https://nathanstockerDCC.github.io/Maps/
