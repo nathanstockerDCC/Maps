@@ -11,15 +11,13 @@
       require([
         "esri/Map",
         "esri/layers/FeatureLayer",
-        "esri/views/SceneView",
-//        "esri/views/MapView",
+        "esri/views/MapView",
         "esri/core/promiseUtils",
         "esri/widgets/Legend",
         "esri/widgets/Home",
         "esri/widgets/Slider",
         "esri/widgets/Fullscreen"
-      ], function(Map, FeatureLayer, SceneView, promiseUtils, Legend, Home, Slider, Fullscreen) {
-//      ], function(Map, FeatureLayer, MapView, promiseUtils, Legend, Home, Slider, Fullscreen) {
+      ], function(Map, FeatureLayer, MapView, promiseUtils, Legend, Home, Slider, Fullscreen) {
         //--------------------------------------------------------------------------
         //
         //  Setup Map and View
@@ -45,8 +43,7 @@
           layers: [layer]
         });
 
- //       var view = new MapView({
-        var view = new SceneView({
+       var view = new MapView({
           map: map,
           container: "viewDiv",
           center: [170.503565668, -45.874113859],
