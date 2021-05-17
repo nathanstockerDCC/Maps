@@ -42,17 +42,17 @@
           container: "viewDiv",
           map: map,
           center: [170.503565668, -45.874113859],
-          zoom: 11
+          zoom: 13
           },
         );
 
         view.when().then(function() {
           const dotDensityRenderer = new DotDensityRenderer({
-            dotValue: 100,
+            dotValue: 10,
             outline: null,
-            referenceScale: 577790,  // 1:577,790 view scale
+            referenceScale: 100000,
             legendOptions: {
-              unit: "people"
+              unit: "workers"
             },
             attributes: [
                {
@@ -88,34 +88,79 @@
             ]
           });
 
-          // Add renderer to the layer and define a popup template
-          const url =
-            "https://services.arcgis.com/P3ePLMYs2RVChkJx/arcgis/rest/services/ACS_Population_by_Race_and_Hispanic_Origin_Boundaries/FeatureServer/2";
           const layer = new FeatureLayer({
              portalItem: {
               id: "a574a463dff64e92a2ef11111e7d3fa4"
          },
-            renderer: dotDensityRenderer
+             title: "Worker density",
+            popupTemplate: {
+              title: "Worker density in meshblock #{MB2013}",
+              content: [
+                {
+                  type: "fields",
+                  fieldInfos: [
+                    {
+                      fieldName: "Education",
+                      label: "Education workers",
+                      format: {
+                        digitSeparator: true,
+                        places: 0
+                      }
+                    },
+                    {
+                      fieldName: "Health",
+                      label: "Health workers",
+                      format: {
+                        digitSeparator: true,
+                        places: 0
+                      }
+                    },
+                    {
+                      fieldName: "Office",
+                      label: "Office workers",
+                      format: {
+                        digitSeparator: true,
+                        places: 0
+                      }
+                    },
+                    {
+                      fieldName: "Industrial",
+                      label: "Industrial workers",
+                      format: {
+                        digitSeparator: true,
+                        places: 0
+                      }
+                    },
+                    {
+                      fieldName: "Retail",
+                      label: "Retail workers",
+                      format: {
+                        digitSeparator: true,
+                        places: 0
+                      }
+                    },
+                    {
+                      fieldName: "NonUrban",
+                      label: "NonUrban workers",
+                      format: {
+                        digitSeparator: true,
+                        places: 0
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+			renderer: dotDensityRenderer
           });
 
           map.add(layer);
 
           view.ui.add(
-            [
-              new Expand({
-                view: view,
-                content: new Legend({ view: view }),
-                group: "top-left",
-                expanded: true
-              }),
-              new Expand({
-                view: view,
-                content: new Bookmarks({ view: view }),
-                group: "top-left"
-              })
-            ],
-            "top-left"
-          );
+              new Legend({
+                view: view}),
+                "top-right"
+              );
         });
       });
     </script>
