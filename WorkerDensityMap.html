@@ -42,7 +42,14 @@
           container: "viewDiv",
           map: map,
           center: [170.503565668, -45.874113859],
-          zoom: 13
+          zoom: 13,
+		  popup: {
+            dockEnabled: true,
+            dockOptions: {
+              buttonEnabled: false,
+              breakpoint: false
+            }
+          }
           },
         );
 
@@ -94,7 +101,8 @@
          },
              title: "Worker density",
             popupTemplate: {
-              title: "Worker density in meshblock #{MB2013}",
+              title: "{Worker density in meshblock #{MB2013}",
+			  location: "top-right",
               content: [
                 {
                   type: "fields",
