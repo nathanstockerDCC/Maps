@@ -1,0 +1,127 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
+
+    <title>Dot density | Sample | ArcGIS API for JavaScript 4.19</title>
+
+    <link rel="stylesheet" href="https://js.arcgis.com/4.19/esri/themes/dark/main.css" />
+
+    <style>
+      html,
+      body,
+      #viewDiv {
+        padding: 0;
+        margin: 0;
+        height: 100%;
+        width: 100%;
+      }
+    </style>
+
+    <script src="https://js.arcgis.com/4.19/"></script>
+
+    <script>
+       require([
+        "esri/Map",
+        "esri/views/MapView",
+        "esri/layers/FeatureLayer",
+        "esri/renderers/DotDensityRenderer",
+        "esri/widgets/Legend",
+        "esri/widgets/Bookmarks",
+        "esri/widgets/Expand"
+      ], function(Map, MapView, FeatureLayer, DotDensityRenderer, Legend, Bookmarks, Expand) {
+        const map = new Map({
+          basemap: { 
+		  portalItem: {
+            id: "56b5bd522c52409c90d902285732e9f1"
+          }
+		  },
+        });
+
+        const view = new MapView({
+          container: "viewDiv",
+          map: map,
+          center: [170.503565668, -45.874113859],
+          zoom: 11
+          },
+        );
+
+        view.when().then(function() {
+          const dotDensityRenderer = new DotDensityRenderer({
+            dotValue: 100,
+            outline: null,
+            referenceScale: 577790,  // 1:577,790 view scale
+            legendOptions: {
+              unit: "people"
+            },
+            attributes: [
+               {
+                field: "Education",
+                color: "#f23c3f",
+                label: "Education"
+              },
+              {
+                field: "Health",
+                color: "#e8ca0d",
+                label: "Health"
+              },
+              {
+                field: "Office",
+                color: "#00b6f1",
+                label: "Office"
+              },
+              {
+                field: "Industrial",
+                color: "#32ef94",
+                label: "Industrial"
+              },
+              {
+                field: "Retail",
+                color: "#ff7fe9",
+                label: "Retail"
+              },
+              {
+                field: "NonUrban",
+                color: "#e2c4a5",
+                label: "NonUrban"
+              }
+            ]
+          });
+
+          // Add renderer to the layer and define a popup template
+          const url =
+            "https://services.arcgis.com/P3ePLMYs2RVChkJx/arcgis/rest/services/ACS_Population_by_Race_and_Hispanic_Origin_Boundaries/FeatureServer/2";
+          const layer = new FeatureLayer({
+             portalItem: {
+              id: "a574a463dff64e92a2ef11111e7d3fa4"
+         },
+            renderer: dotDensityRenderer
+          });
+
+          map.add(layer);
+
+          view.ui.add(
+            [
+              new Expand({
+                view: view,
+                content: new Legend({ view: view }),
+                group: "top-left",
+                expanded: true
+              }),
+              new Expand({
+                view: view,
+                content: new Bookmarks({ view: view }),
+                group: "top-left"
+              })
+            ],
+            "top-left"
+          );
+        });
+      });
+    </script>
+  </head>
+
+  <body>
+    <div id="viewDiv"></div>
+  </body>
+</html>
