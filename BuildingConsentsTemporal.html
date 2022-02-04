@@ -27,10 +27,9 @@
         var layer = new FeatureLayer({
           portalItem: {
 //            id: "01793cede995441abb0d474ef6966c80"
-              id: "bf373bfb2b684a1d9571179bc26f5eea"
+              id: "975b87b5dac04543a15e23bb8ca1a11b"
          },
-          definitionExpression: "CNSTRCT_YR > 0",
-          title: "Building Footprints",
+          title: "Consented homes",
           effect: "bloom(2.5 0 0.5)"
         });
 
@@ -72,10 +71,10 @@
 
         var slider = new Slider({
           container: "slider",
-          min: 1845,
+          min: 2013,
           max: 2021,
-          values: [ 1845 ],
-          step: 1,
+          values: [ 2013 ],
+          step: 0.08333333333,
           visibleElements: {
             rangeLabels: true
           }
@@ -126,7 +125,7 @@
         view.whenLayerView(layer).then(setupHoverTooltip);
 
         // Starts the application by visualizing year 1845
-        setYear(1845);
+        setYear(2013);
 
         //--------------------------------------------------------------------------
         //
@@ -150,15 +149,15 @@
          * year are visualized with a pink color. Buildings built within that
          * 20-year time frame are assigned a color interpolated between blue and pink.
          */
-        function createRenderer(year) {
+        function createRenderer(month) {
           var opacityStops = [
             {
               opacity: 1,
-              value: year
+              value: month
             },
             {
               opacity: 0,
-              value: year + 1
+              value: month + 12
             }
           ];
 
@@ -172,7 +171,7 @@
             visualVariables: [
               {
                 type: "opacity",
-                field: "CNSTRCT_YR",
+                field: "Month",
                 stops: opacityStops,
                 legendOptions: {
                   showLegend: false
@@ -180,25 +179,25 @@
               },
               {
                 type: "color",
-                field: "CNSTRCT_YR",
+                field: "Month",
                 legendOptions: {
-                  title: "Built:"
+                  title: "Consented :"
                 },
                 stops: [
                   {
                     value: year,
                     color: "#0ff",
-                    label: "in " + Math.floor(year)
+                    label: "in " + Math.floor(month)
                   },
                   {
                     value: year - 10,
                     color: "#f0f",
-                    label: "in " + (Math.floor(year) - 20)
+                    label: "in " + (Math.floor(month) - 20)
                   },
                   {
                     value: year - 50,
                     color: "#404",
-                    label: "before " + (Math.floor(year) - 50)
+                    label: "before " + (Math.floor(month) - 50)
                   }
                 ]
               }
@@ -249,7 +248,7 @@
                   var screenPoint = hit.screenPoint;
 
                   highlight = layerview.highlight(graphic);
-                  tooltip.show(screenPoint, "Built in " + graphic.getAttribute("CNSTRCT_YR"));
+                  tooltip.show(screenPoint, "Consented in " + graphic.getAttribute("month"));
                 } else {
                   tooltip.hide();
                 }
@@ -264,7 +263,7 @@
         function startAnimation() {
           stopAnimation();
           if (slider.values[0] >= 2021) {
-			  animation = animate(1845);
+			  animation = animate(2013);
 		  }
 			else {
 			  animation = animate(slider.values[0]);
@@ -297,7 +296,7 @@
               return;
             }
 
-            value += 0.4;
+            value += 0.08333333333;
             if (value > 2021) {
              animating = false;
             }
