@@ -125,7 +125,7 @@
         view.whenLayerView(layer).then(setupHoverTooltip);
 
         // Starts the application by visualizing year 1845
-        setYear(2013);
+        setYear(01/01/2013);
 
         //--------------------------------------------------------------------------
         //
@@ -153,11 +153,13 @@
           var opacityStops = [
             {
               opacity: 1,
-              value: month
+              value: month,
+	      unit: "months"
             },
             {
               opacity: 0,
-              value: month + 31
+              value: month + 31,
+	      unit: "months"
             }
           ];
 
@@ -192,12 +194,12 @@
                   {
                     value: month - 31,
                     color: "#f0f",
-                    label: "in " + (Math.floor(month) - 31)
+                    label: "in " + (Math.floor(month) - 182)
                   },
                   {
                     value: month - 62,
                     color: "#404",
-                    label: "before " + (Math.floor(month) - 62)
+                    label: "before " + (Math.floor(month) - 365)
                   }
                 ]
               }
@@ -262,8 +264,8 @@
          */
         function startAnimation() {
           stopAnimation();
-          if (slider.values[0] >= 2021) {
-			  animation = animate(2013);
+          if (slider.values[0] >= 01/01/2021) {
+			  animation = animate(01/01/2013);
 		  }
 			else {
 			  animation = animate(slider.values[0]);
@@ -296,7 +298,7 @@
               return;
             }
 
-            value += 0.08333333333;
+            value += 1;
             if (value > 2021) {
              animating = false;
             }
