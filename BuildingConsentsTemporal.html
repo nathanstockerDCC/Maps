@@ -19,7 +19,7 @@
 
     <link
       rel="stylesheet"
-      href="https://js.arcgis.com/4.22/esri/themes/light/main.css"
+      href="https://js.arcgis.com/4.22/esri/themes/dark/main.css"
     />
     <script src="https://js.arcgis.com/4.22/"></script>
 
@@ -74,8 +74,8 @@
 //            id: "01793cede995441abb0d474ef6966c80"
               id: "975b87b5dac04543a15e23bb8ca1a11b"
          },
-          title: "Consented homes",
-          effect: "bloom(2.5 0 0.5)"
+          title: "Consented homes"//,
+//          effect: "bloom(0.5 0 0.5)"
         });
         var map = new Map({
           basemap: {
@@ -100,31 +100,32 @@
        var timeSlider = new TimeSlider({
         container: "timeSlider",
         view: view,
-        timeVisible: true, // show the time stamps on the timeslider
-        loop: true
+        timeVisible: false, // show the time stamps on the timeslider
+        loop: false
       });
 
-       view.ui.add("titleDiv", "top-right");
+//       view.ui.add("titleDiv", "top-right");
 
       view.whenLayerView(layer).then((lv) => {
         // around up the full time extent to full hour
-        timeSlider.fullTimeExtent = layer.timeInfo.fullTimeExtent.expandTo("hours");
+        timeSlider.fullTimeExtent = layer.timeInfo.fullTimeExtent.expandTo("months");
         timeSlider.stops = {
-          interval: layer.timeInfo.interval
+          interval: {
+      value: 6,
+      unit: "months"
+    }
         };
+      timeSlider.timeExtent = {
+    start: new Date(2019, 0, 1),
+    end: new Date(2021, 0, 1) //end date
+  }
        });
 
 const legend = new Legend({
         view: view
       });
-const legendExpand = new Expand({
-        expandIconClass: "esri-icon-legend",
-        expandTooltip: "Legend",
-        view: view,
-        content: legend,
-        expanded: false
-      });
-      view.ui.add(legendExpand, "top-left");
+        
+      view.ui.add(legend, "top-right");
     });       
         
  //     });
@@ -140,6 +141,6 @@ const legendExpand = new Expand({
     <div id="viewDiv"></div>
     <div id="timeSlider"></div>
     <div id="titleDiv" class="esri-widget">
-      <div id="titleText">Precipitation forecast for next 72 hours </div>
+      <div id="titleText">Newly consented homes</div>
       </body>
 </html>
