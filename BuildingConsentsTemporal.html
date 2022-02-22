@@ -101,7 +101,8 @@
         container: "timeSlider",
         view: view,
         timeVisible: false, // show the time stamps on the timeslider
-        loop: false
+        loop: false,
+    playRate: 200
       });
 
 //       view.ui.add("titleDiv", "top-right");
@@ -111,7 +112,7 @@
         timeSlider.fullTimeExtent = layer.timeInfo.fullTimeExtent.expandTo("months");
         timeSlider.stops = {
           interval: {
-      value: 6,
+      value: 1,
       unit: "months"
     }
         };
