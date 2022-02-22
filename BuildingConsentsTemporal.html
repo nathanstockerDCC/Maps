@@ -5,7 +5,7 @@
       name="viewport"
       content="initial-scale=1,maximum-scale=1,user-scalable=no"
       
-      <title>Dunedin Building Consents</title>
+      <title></title>
       <style>
         html,
         body,
@@ -105,7 +105,16 @@
             playRate: 200
           });
           
-          //       view.ui.add("titleDiv", "top-right");
+          
+          view.ui.add([{
+            component: "titleDiv",
+            position: "top-left",
+            index: 0}])
+          
+        view.ui.move([{
+            component: "zoom",
+            position: "top-left",
+            index: 1}]);
           
           view.whenLayerView(layer).then((lv) => {
             // around up the full time extent to full hour
@@ -125,12 +134,15 @@
           const legend = new Legend({
             view: view
           });
-          
-          view.ui.add(legend, "top-right");
+
+        
+          view.ui.add([{
+            component: legend,
+            position: "top-right",
+    index: 0}]);
+
         });
-        
-        //     });
-        
+
         
       </script>
       
