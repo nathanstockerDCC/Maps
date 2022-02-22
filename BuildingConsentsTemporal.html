@@ -4,144 +4,144 @@
     <meta
       name="viewport"
       content="initial-scale=1,maximum-scale=1,user-scalable=no"
-
-    <title>Dunedin Building Consents</title>
-    <style>
-      html,
-      body,
-      #viewDiv {
-        padding: 0;
-        margin: 0;
-        height: 100%;
-        width: 100%;
-      }
-    </style>
-
-    <link
-      rel="stylesheet"
-      href="https://js.arcgis.com/4.22/esri/themes/dark/main.css"
-    />
-    <script src="https://js.arcgis.com/4.22/"></script>
-
-           <style>
-      html,
-      body,
-      #viewDiv {
-        padding: 0;
-        margin: 0;
-        height: 100%;
-        width: 100%;
-      }
-
-      #timeSlider {
-        position: absolute;
-        left: 5%;
-        right: 5%;
-        bottom: 20px;
-      }
-
-      #titleDiv {
-        padding: 10px;
-        font-weight: 36;
-        text-align: center;
-      }
-    </style>
-      <script>
-    
-      require([
-        "esri/Map",
-        "esri/views/MapView",
-        "esri/layers/FeatureLayer",
-        "esri/widgets/Legend",
-        "esri/widgets/Expand",
-        "esri/widgets/TimeSlider",
-        "esri/core/watchUtils",
-        "esri/core/promiseUtils"     
-      ], function(
-        Map,
-        MapView,
-        FeatureLayer,
-        Legend,
-        Expand,
-        TimeSlider,
-        watchUtils,
-        promiseUtils,
-      ) {
-//        let timeSlider;
-        
-        var layer = new FeatureLayer({
-          portalItem: {
-//            id: "01793cede995441abb0d474ef6966c80"
-              id: "975b87b5dac04543a15e23bb8ca1a11b"
-         },
-          title: "Consented homes"//,
-//          effect: "bloom(0.5 0 0.5)"
-        });
-        var map = new Map({
-          basemap: {
-            portalItem: {
-              id: "4f2e99ba65e34bb8af49733d9778fb8e"
-            }
-          },
-          layers: [layer]
-        });
-
-       var view = new MapView({
-          map: map,
-          container: "viewDiv",
-          center: [170.503565668, -45.874113859],
-          zoom: 11,
-          constraints: {
-            snapToZoom: false,
-          resizeAlign: "top-left"
+      
+      <title>Dunedin Building Consents</title>
+      <style>
+        html,
+        body,
+        #viewDiv {
+          padding: 0;
+          margin: 0;
+          height: 100%;
+          width: 100%;
         }
-       });
-
-       var timeSlider = new TimeSlider({
-        container: "timeSlider",
-        view: view,
-        timeVisible: false, // show the time stamps on the timeslider
-        loop: false,
-    playRate: 200
-      });
-
-//       view.ui.add("titleDiv", "top-right");
-
-      view.whenLayerView(layer).then((lv) => {
-        // around up the full time extent to full hour
-        timeSlider.fullTimeExtent = layer.timeInfo.fullTimeExtent.expandTo("months");
-        timeSlider.stops = {
-          interval: {
-      value: 1,
-      unit: "months"
-    }
-        };
-      timeSlider.timeExtent = {
-    start: new Date(2019, 0, 1),
-    end: new Date(2021, 0, 1) //end date
-  }
-       });
-
-const legend = new Legend({
-        view: view
-      });
+      </style>
+      
+      <link
+        rel="stylesheet"
+        href="https://js.arcgis.com/4.22/esri/themes/dark/main.css"
+        />
+      <script src="https://js.arcgis.com/4.22/"></script>
+      
+      <style>
+        html,
+        body,
+        #viewDiv {
+          padding: 0;
+          margin: 0;
+          height: 100%;
+          width: 100%;
+        }
         
-      view.ui.add(legend, "top-right");
-    });       
+        #timeSlider {
+          position: absolute;
+          left: 5%;
+          right: 5%;
+          bottom: 20px;
+        }
         
- //     });
-
-  
-  </script>
-
-
-  
-  </head>
-
-  <body>
-    <div id="viewDiv"></div>
-    <div id="timeSlider"></div>
-    <div id="titleDiv" class="esri-widget">
-      <div id="titleText">Newly consented homes</div>
-      </body>
-</html>
+        #titleDiv {
+          padding: 10px;
+          font-weight: 36;
+          text-align: center;
+        }
+      </style>
+      <script>
+        
+        require([
+          "esri/Map",
+          "esri/views/MapView",
+          "esri/layers/FeatureLayer",
+          "esri/widgets/Legend",
+          "esri/widgets/Expand",
+          "esri/widgets/TimeSlider",
+          "esri/core/watchUtils",
+          "esri/core/promiseUtils"
+        ], function(
+          Map,
+          MapView,
+          FeatureLayer,
+          Legend,
+          Expand,
+          TimeSlider,
+          watchUtils,
+          promiseUtils,
+        ) {
+          //        let timeSlider;
+          
+          var layer = new FeatureLayer({
+            portalItem: {
+              //            id: "01793cede995441abb0d474ef6966c80"
+              id: "975b87b5dac04543a15e23bb8ca1a11b"
+            },
+            title: "Consented homes"//,
+            //          effect: "bloom(0.5 0 0.5)"
+          });
+          var map = new Map({
+            basemap: {
+              portalItem: {
+                id: "4f2e99ba65e34bb8af49733d9778fb8e"
+              }
+            },
+            layers: [layer]
+          });
+          
+          var view = new MapView({
+            map: map,
+            container: "viewDiv",
+            center: [170.503565668, -45.874113859],
+            zoom: 11,
+            constraints: {
+              snapToZoom: false,
+              resizeAlign: "top-left"
+            }
+          });
+          
+          var timeSlider = new TimeSlider({
+            container: "timeSlider",
+            view: view,
+            timeVisible: false, // show the time stamps on the timeslider
+            loop: false,
+            playRate: 200
+          });
+          
+          //       view.ui.add("titleDiv", "top-right");
+          
+          view.whenLayerView(layer).then((lv) => {
+            // around up the full time extent to full hour
+            timeSlider.fullTimeExtent = layer.timeInfo.fullTimeExtent.expandTo("months");
+            timeSlider.stops = {
+              interval: {
+                value: 1,
+                unit: "months"
+              }
+            };
+            timeSlider.timeExtent = {
+              start: new Date(2019, 0, 1),
+              end: new Date(2021, 0, 1) //end date
+            }
+          });
+          
+          const legend = new Legend({
+            view: view
+          });
+          
+          view.ui.add(legend, "top-right");
+        });
+        
+        //     });
+        
+        
+      </script>
+      
+      
+      
+      </head>
+    
+    <body>
+      <div id="viewDiv"></div>
+      <div id="timeSlider"></div>
+      <div id="titleDiv" class="esri-widget">
+        <div id="titleText">Newly consented homes</div>
+        </body>
+        </html>
