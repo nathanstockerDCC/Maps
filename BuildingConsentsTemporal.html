@@ -102,7 +102,7 @@
           var timeSlider = new TimeSlider({
             container: "timeSlider",
             view: view,
-            timeVisible: false, // show the time stamps on the timeslider
+            timeVisible: false,
             loop: false,
             playRate: 200
           });
@@ -118,8 +118,6 @@
             position: "top-left",
             index: 1}]);
           
-          view.whenLayerView(layer).then((lv) => {
-            // around up the full time extent to full hour
             timeSlider.fullTimeExtent = layer.timeInfo.fullTimeExtent.expandTo("months");
             timeSlider.stops = {
               interval: {
@@ -129,9 +127,8 @@
             };
             timeSlider.timeExtent = {
               start: new Date(2019, 0, 1),
-              end: new Date(2021, 0, 1) //end date
-            }
-          });
+              end: new Date(2022, 0, 1)
+            };
           
           const basemapGallery = new BasemapGallery({
   view: view,
@@ -147,7 +144,6 @@
           const legend = new Legend({
             view: view
           });
-
         
           view.ui.add([{
             component: legend,
@@ -159,11 +155,8 @@
     index: 1}]);
 
         });
-
-        
+  
       </script>
-      
-      
       
       </head>
     
