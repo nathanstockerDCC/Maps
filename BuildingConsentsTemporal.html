@@ -73,7 +73,6 @@
           
           var layer = new FeatureLayer({
             portalItem: {
-              //            id: "01793cede995441abb0d474ef6966c80"
               id: "40acc1e89e5648e78bcd4488ced0688f"
             },
             title: "Consented homes"//,
@@ -118,7 +117,8 @@
             position: "top-left",
             index: 1}]);
           
-            timeSlider.fullTimeExtent = layer.timeInfo.fullTimeExtent.expandTo("months");
+          view.whenLayerView(layer).then((lv) => {
+//            timeSlider.fullTimeExtent = layer.timeInfo.fullTimeExtent.expandTo("months");
             timeSlider.stops = {
               interval: {
                 value: 1,
@@ -127,35 +127,36 @@
             };
             timeSlider.timeExtent = {
               start: new Date(2019, 0, 1),
-              end: new Date(2022, 0, 1)
-            };
+              end: new Date(2021, 0, 1)
+            }
+			});
           
-          const basemapGallery = new BasemapGallery({
-  view: view,
-  container: "BasemapDiv",
-});
+        const basemapGallery = new BasemapGallery({
+			view: view,
+			container: "BasemapDiv",
+			});
           
-          basemapGalleryExpand = new Expand({
-   view: view,
-   expandIconClass: "esri-icon-basemap",
-  content: basemapGallery           
-          }); 
+        basemapGalleryExpand = new Expand({
+			view: view,
+			expandIconClass: "esri-icon-basemap",
+			content: basemapGallery           
+			}); 
             
-          const legend = new Legend({
-            view: view
-          });
-        
-          view.ui.add([{
+        const legend = new Legend({
+			view: view
+			});
+       
+        view.ui.add([{
             component: legend,
             position: "top-right",
-    index: 0},
+			index: 0},
                       {
             component:    basemapGalleryExpand,
             position: "top-left",
-    index: 1}]);
+			index: 1}]);
 
         });
-  
+   
       </script>
       
       </head>
