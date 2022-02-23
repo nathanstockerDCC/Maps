@@ -74,6 +74,7 @@
           var layer = new FeatureLayer({
             portalItem: {
               id: "40acc1e89e5648e78bcd4488ced0688f"
+//              id: "975b87b5dac04543a15e23bb8ca1a11b"
             },
             title: "Consented homes"//,
             //          effect: "bloom(0.5 0 0.5)"
@@ -118,7 +119,7 @@
             index: 1}]);
           
           view.whenLayerView(layer).then((lv) => {
-            timeSlider.fullTimeExtent = layer.timeInfo.fullTimeExtent.expandTo("hours");
+           timeSlider.fullTimeExtent = layer.timeInfo.fullTimeExtent.expandTo("months");
             timeSlider.stops = {
               interval: {
                 value: 1,
