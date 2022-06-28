@@ -3,7 +3,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
 
-    <title>Test impermeability map</title>
+    <title>Impermeability map</title>
 
     <link rel="stylesheet" href="https://js.arcgis.com/4.19/esri/themes/dark/main.css" />
 
@@ -22,55 +22,33 @@
 
     <script>
        require([
-        "esri/Map",
+        "esri/WebMap",
         "esri/views/MapView",
         "esri/layers/FeatureLayer",
         "esri/widgets/Legend",
-        "esri/widgets/Bookmarks",
         "esri/widgets/Expand"
-      ], function(Map, MapView, FeatureLayer, Legend, Bookmarks, Expand) {
-        const map = new Map({
-          basemap: { 
-		  portalItem: {
-            id: "8a4887950d7546f290b9f2810c97c080"
-          }
-		  },
-        });
+      ], function(WebMap, MapView, FeatureLayer, Legend, Expand) {
+
+	const webmap = new WebMap({
+	  portalItem: { // autocasts as new PortalItem()
+		id: "8a4887950d7546f290b9f2810c97c080"
+	  }
+	});
 
         const view = new MapView({
           container: "viewDiv",
-          map: map,
+          map: webmap,
           center: [170.503565668, -45.874113859],
-          zoom: 13
+          zoom: 3,
+		  popup: {
+            dockEnabled: true,
+            dockOptions: {
+              buttonEnabled: false,
+              breakpoint: false
+            }
           }
           },
         );
-
-          const layer = new FeatureLayer({
-             portalItem: {
-              id: "a574a463dff64e92a2ef11111e7d3fa4"
-         },
-             title: "Worker density",
-            popupTemplate: {
-              title: "{Worker density in meshblock #{MB2013}",
-			  location: "top-right",
-              content: [
-                {
-                  type: "fields",
-                  fieldInfos: [
-                    {
-                      fieldName: "Education",
-                      label: "Education workers",
-                      format: {
-                        digitSeparator: true,
-                        places: 0
-                      }
-                    },
-                    {
-                      fieldName: "Health",
-                      label: "Health workers",
-                      format: {
-                        digitSeparator: true,
 
           view.ui.add(
               new Legend({
@@ -78,7 +56,6 @@
                 "top-right"
               );
         });
-      });
     </script>
   </head>
 
