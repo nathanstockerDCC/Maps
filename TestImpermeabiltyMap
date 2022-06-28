@@ -1,0 +1,88 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
+
+    <title>Test impermeability map</title>
+
+    <link rel="stylesheet" href="https://js.arcgis.com/4.19/esri/themes/dark/main.css" />
+
+    <style>
+      html,
+      body,
+      #viewDiv {
+        padding: 0;
+        margin: 0;
+        height: 100%;
+        width: 100%;
+      }
+    </style>
+
+    <script src="https://js.arcgis.com/4.19/"></script>
+
+    <script>
+       require([
+        "esri/Map",
+        "esri/views/MapView",
+        "esri/layers/FeatureLayer",
+        "esri/widgets/Legend",
+        "esri/widgets/Bookmarks",
+        "esri/widgets/Expand"
+      ], function(Map, MapView, FeatureLayer, Legend, Bookmarks, Expand) {
+        const map = new Map({
+          basemap: { 
+		  portalItem: {
+            id: "8a4887950d7546f290b9f2810c97c080"
+          }
+		  },
+        });
+
+        const view = new MapView({
+          container: "viewDiv",
+          map: map,
+          center: [170.503565668, -45.874113859],
+          zoom: 13
+          }
+          },
+        );
+
+          const layer = new FeatureLayer({
+             portalItem: {
+              id: "a574a463dff64e92a2ef11111e7d3fa4"
+         },
+             title: "Worker density",
+            popupTemplate: {
+              title: "{Worker density in meshblock #{MB2013}",
+			  location: "top-right",
+              content: [
+                {
+                  type: "fields",
+                  fieldInfos: [
+                    {
+                      fieldName: "Education",
+                      label: "Education workers",
+                      format: {
+                        digitSeparator: true,
+                        places: 0
+                      }
+                    },
+                    {
+                      fieldName: "Health",
+                      label: "Health workers",
+                      format: {
+                        digitSeparator: true,
+
+          view.ui.add(
+              new Legend({
+                view: view}),
+                "top-right"
+              );
+        });
+      });
+    </script>
+  </head>
+
+  <body>
+    <div id="viewDiv"></div>
+  </body>
+</html>
