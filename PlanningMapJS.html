@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
 
-    <title>Impermeability map</title>
+    <title>Unofficial 2GP Planning Map</title>
 
     <link rel="stylesheet" href="https://js.arcgis.com/4.19/esri/themes/dark/main.css" />
 
@@ -75,17 +75,37 @@
 
                 layerList.on("trigger-action", (event) => {
                     const visibleLayer = event.item.title;
-                  console.log(visibleLayer);
 
                     const id = event.action.id;
+					console.log(visibleLayer);
+					
+					let allSublayers = view.map.layers.flatten(function(item){
+					return item.sublayers;
+					});
+						
+					if (['Contour', 'Variation 2', 'Appeals', 'Land Information', 'Scheduled Items', 'Overlay Zones', 'Mapped Areas', 'Taieri Aerodrome Flight Fan Mapped Area', 'Zones'].includes(visibleLayer))
+						view.map.layers.forEach((layer) => {
+							if (layer.title != visibleLayer) 
+								{layer.visible = false; }
+							else 
+							{layer.visible = true; }
+							;})
+					else {
+						allSublayers.forEach((layer) => {
+							if (layer.title != visibleLayer) 
+								{layer.visible = false; }
+							else 
+							{layer.visible = true; }
+							;})								
 
-					view.map.layers.forEach((layer) => {
-						if (layer.title != visibleLayer) 
-							{layer.visible = false; }
-						else 
-						{layer.visible = true; }
+						view.map.layers.forEach((layer) => {
+							console.log(layer.title);
+							if (['Variation 2', 'Appeals', 'Land Information', 'Scheduled Items', 'Overlay Zones', 'Mapped Areas', 'Zones'].includes(layer.title))
+							{layer.visible = true; }
+							;})
+
+						;}
                     });
-                });
 
                 view.ui.add(layerList, "top-right");
             });
