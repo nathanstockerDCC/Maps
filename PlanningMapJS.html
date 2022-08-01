@@ -28,11 +28,12 @@
             "esri/layers/FeatureLayer",
             "esri/widgets/Legend",
             "esri/widgets/LayerList",
+            "esri/widgets/Search",
             "esri/support/actions/ActionToggle",
             "esri/support/actions/ActionButton",
             "esri/widgets/Expand",
             "esri/widgets/BasemapGallery"
-        ], function(WebMap, MapView, FeatureLayer, Legend, LayerList, ActionToggle, ActionButton, Expand, BasemapGallery) {
+        ], function(WebMap, MapView, FeatureLayer, Legend, LayerList, Search, ActionToggle, ActionButton, Expand, BasemapGallery) {
 
             const webmap = new WebMap({
                 portalItem: {
@@ -149,6 +150,17 @@
         const legend = new Legend({
 			view: view
 			});
+             
+        const search = new Search({
+			view: view
+			});
+           
+        searchExpand = new Expand({
+			view: view,
+      expanded: false,
+			expandIconClass: "esri-icon-search",
+			content: search           
+			}); 
           
         legendExpand = new Expand({
 			view: view,
@@ -164,7 +176,12 @@
                       {
             component:    basemapGalleryExpand,
             position: "top-left",
-			index: 1}]);
+			index: 2},
+                      {
+            component:    searchExpand,
+            position: "top-left",
+			index: 1}
+                 ]);
 			
 
 });
