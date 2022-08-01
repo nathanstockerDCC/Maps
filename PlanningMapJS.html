@@ -31,9 +31,10 @@
             "esri/widgets/Search",
             "esri/support/actions/ActionToggle",
             "esri/support/actions/ActionButton",
+            "esri/widgets/Measurement",
             "esri/widgets/Expand",
             "esri/widgets/BasemapGallery"
-        ], function(WebMap, MapView, FeatureLayer, Legend, LayerList, Search, ActionToggle, ActionButton, Expand, BasemapGallery) {
+        ], function(WebMap, MapView, FeatureLayer, Legend, LayerList, Search, ActionToggle, ActionButton, Measurement, Expand, BasemapGallery) {
 
             const webmap = new WebMap({
                 portalItem: {
@@ -154,17 +155,29 @@
         const search = new Search({
 			view: view
 			});
-           
+               
+        const measurement = new Measurement({
+			view: view,
+  			activeTool: "distance"
+			});
+		
+        measurementExpand = new Expand({
+			view: view,
+      			expanded: false,
+			expandIconClass: "esri-icon-measurement",
+			content: measurement           
+			}); 
+          		
         searchExpand = new Expand({
 			view: view,
-      expanded: false,
+     			expanded: false,
 			expandIconClass: "esri-icon-search",
 			content: search           
 			}); 
           
         legendExpand = new Expand({
 			view: view,
-      expanded: true,
+      			expanded: true,
 			expandIconClass: "esri-icon-legend",
 			content: legend           
 			}); 
@@ -180,7 +193,11 @@
                       {
             component:    searchExpand,
             position: "top-left",
-			index: 1}
+			index: 1},
+                      {
+            component:    measurementExpand,
+            position: "top-left",
+			index: 3}
                  ]);
 			
 
