@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
 
-    <title>Unofficial 2GP Planning Map</title>
+    <title>Planning Map JS</title>
 
     <link rel="stylesheet" href="https://js.arcgis.com/4.19/esri/themes/dark/main.css" />
 
@@ -60,14 +60,23 @@
                     listItemCreatedFunction: defineActions
                 });
 
+				var OpenCloseDict = {};
+				let allLayersAndSublayers = view.map.layers.flatten(function(item){
+					return item.layers || item.sublayers;
+					});
+									
+				view.map.layers.forEach((layer) => {
+					OpenCloseDict[layer.title] = "Unclicked"
+				;})
+
                 function defineActions(event) {
                     var item = event.item;
                     var LayerName = item.title;
 
                     item.actionsSections = [
                         [{
-                            title: "Go to full extent",
-                            className: "esri-icon-zoom-out-fixed",
+                            title: "Show this layer only",
+                            className: "esri-icon-locate",
                             id: "full-extent"
                         }]
                     ];
@@ -76,20 +85,37 @@
                 layerList.on("trigger-action", (event) => {
                     const visibleLayer = event.item.title;
 
-                    const id = event.action.id;
-					console.log(visibleLayer);
-					
+				
 					let allSublayers = view.map.layers.flatten(function(item){
 					return item.sublayers;
 					});
-						
+					
+					if (OpenCloseDict[event.item.title] == "Clicked")
+					{OpenCloseDict[event.item.title] = "Unclicked";
+					console.log(event.item.title + " changed from Clicked to unclicked");
+					allLayersAndSublayers.forEach((layer) => 
+					{layer.visible = true;})
+					allSublayers.forEach((layer) => {
+					layer.visible = true;})		
+					}
+					
+					else 
+					{OpenCloseDict[event.item.title] = "Clicked";					
+					console.log( event.item.title + " changed from Unclicked to clicked");
+					
+					const id = event.action.id;
+								
 					if (['Contour', 'Variation 2', 'Appeals', 'Land Information', 'Scheduled Items', 'Overlay Zones', 'Mapped Areas', 'Taieri Aerodrome Flight Fan Mapped Area', 'Zones'].includes(visibleLayer))
+					{
+						allSublayers.forEach((layer) => 
+						 {layer.visible = true })
 						view.map.layers.forEach((layer) => {
-							if (layer.title != visibleLayer) 
-								{layer.visible = false; }
-							else 
-							{layer.visible = true; }
-							;})
+										if (layer.title != visibleLayer) 
+											{layer.visible = false; }
+										else 
+										{layer.visible = true; }
+										;})
+						;}
 					else {
 						allSublayers.forEach((layer) => {
 							if (layer.title != visibleLayer) 
@@ -99,14 +125,13 @@
 							;})								
 
 						view.map.layers.forEach((layer) => {
-							console.log(layer.title);
 							if (['Variation 2', 'Appeals', 'Land Information', 'Scheduled Items', 'Overlay Zones', 'Mapped Areas', 'Zones'].includes(layer.title))
 							{layer.visible = true; }
 							;})
 
 						;}
-				
-                    });
+					}
+                });
 
                 view.ui.add(layerList, "top-right");
             });
@@ -127,6 +152,7 @@
           
         legendExpand = new Expand({
 			view: view,
+      expanded: true,
 			expandIconClass: "esri-icon-legend",
 			content: legend           
 			}); 
